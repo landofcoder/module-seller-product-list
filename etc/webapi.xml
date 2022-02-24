@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Landofcoder
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Landofcoder.com license that is
+ * available through the world-wide-web at this URL:
+ * https://landofcoder.com/license
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category   Landofcoder
+ * @package    Lofmp_Productlist
+ * @copyright  Copyright (c) 2022 Landofcoder (https://landofcoder.com/)
+ * @license    https://landofcoder.com/LICENSE-1.0.html
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../app/code/Magento/Webapi/etc/webapi.xsd">
+    <route url="/V1/seller-productlist/:sellerId/newarrival" method="GET">
+        <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getNewarrivalProducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/seller-productlist/:sellerId/latest" method="GET">
+        <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getLatestProducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/seller-productlist/:sellerId/bestseller" method="GET">
+        <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getBestsellerProducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/seller-productlist/:sellerId/random" method="GET">
+        <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getRandomProducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/seller-productlist/:sellerId/toprated" method="GET">
+        <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getTopratedProducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/seller-productlist/:sellerId/specials" method="GET">
+        <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getSpecialProducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/seller-productlist/:sellerId/mostviewed" method="GET">
+        <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getMostViewedProducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/seller-productlist/:sellerId/featured" method="GET">
+        <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getFeaturedProducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/seller-productlist/:sellerId/deals" method="GET">
+        <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getDealsProducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>

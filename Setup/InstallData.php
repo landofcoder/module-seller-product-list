@@ -1,24 +1,27 @@
 <?php
 /**
- * Venustheme
+ * Landofcoder
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Venustheme.com license that is
+ * This source file is subject to the Landofcoder.com license that is
  * available through the world-wide-web at this URL:
- * http://www.venustheme.com/license-agreement.html
+ * https://landofcoder.com/license
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade this extension to newer
  * version in the future.
  *
- * @category   Venustheme
- * @package    Ves_Brand
- * @copyright  Copyright (c) 2014 Venustheme (http://www.venustheme.com/)
- * @license    http://www.venustheme.com/LICENSE-1.0.html
+ * @category   Landofcoder
+ * @package    Lofmp_Productlist
+ * @copyright  Copyright (c) 2022 Landofcoder (https://landofcoder.com/)
+ * @license    https://landofcoder.com/LICENSE-1.0.html
  */
-namespace Ves\Productlist\Setup;
+
+declare(strict_types = 1);
+
+namespace Lofmp\Productlist\Setup;
 
 use Magento\Framework\Module\Setup\Migration;
 use Magento\Framework\Setup\InstallDataInterface;
@@ -28,6 +31,9 @@ use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Eav\Model\Config;
 use Magento\Catalog\Model\Product;
 
+/**
+ * InstallData class to create new product attributes: featured
+ */
 class InstallData implements InstallDataInterface
 {
 

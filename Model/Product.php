@@ -25,6 +25,7 @@ namespace Lofmp\Productlist\Model;
 
 use Lof\MarketPlace\Model\SellerProduct;
 use Lof\MarketPlace\Model\ResourceModel\Seller\CollectionFactory as SellerCollectionFactory;
+use Lofmp\Productlist\Helper\Data;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -95,6 +96,11 @@ class Product extends \Magento\Framework\DataObject
     protected $sellerCollectionFactory;
 
     /**
+     * @var Data
+     */
+    protected $helperData;
+
+    /**
      * @var mixed|array
      */
     protected $sellerIds = [];
@@ -112,6 +118,7 @@ class Product extends \Magento\Framework\DataObject
      * @param \Magento\CatalogInventory\Api\StockConfigurationInterface      $stockConfiguration
      * @param \Magento\CatalogInventory\Helper\Stock                         $stockFilter
      * @param SellerCollectionFactory $sellerCollectionFactory
+     * @param Data $helperData
      * @param array                                                          $data
      */
     public function __construct(
@@ -127,6 +134,7 @@ class Product extends \Magento\Framework\DataObject
         \Magento\CatalogInventory\Api\StockConfigurationInterface $stockConfiguration,
         \Magento\CatalogInventory\Helper\Stock $stockFilter,
         SellerCollectionFactory $sellerCollectionFactory,
+        Data $helperData,
         array $data = []
         ) {
         $this->_localeDate               = $localeDate;
@@ -141,6 +149,7 @@ class Product extends \Magento\Framework\DataObject
         $this->stockConfiguration        = $stockConfiguration;
         $this->stockFilter               = $stockFilter;
         $this->sellerCollectionFactory = $sellerCollectionFactory;
+        $this->helperData = $helperData;
         parent::__construct($data);
     }
 
@@ -149,10 +158,13 @@ class Product extends \Magento\Framework\DataObject
      *
      * @param int $sellerId
      * @param mixed|array $config
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection|null
      */
     public function getNewarrivalProducts($sellerId, $config = [])
     {
+        if (!$this->helperData->isEnabled()) {
+            return null;
+        }
         $todayStartOfDayDate = $this->_localeDate->date()
             ->setTime(0, 0)
             ->format('Y-m-d H:i:s');
@@ -249,10 +261,13 @@ class Product extends \Magento\Framework\DataObject
      *
      * @param int $sellerId
      * @param mixed|array $config
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection|null
      */
     public function getLatestProducts($sellerId, $config = [])
     {
+        if (!$this->helperData->isEnabled()) {
+            return null;
+        }
         /** @var $collection \Magento\Catalog\Model\ResourceModel\Product\Collection */
         $collection = $this->_productCollectionFactory->create();
         if (isset($config['categories']) && $config['categories']) {
@@ -308,10 +323,13 @@ class Product extends \Magento\Framework\DataObject
      *
      * @param int $sellerId
      * @param mixed|array $config
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection|null
      */
     public function getBestsellerProducts($sellerId, $config = [])
     {
+        if (!$this->helperData->isEnabled()) {
+            return null;
+        }
         $storeId = $this->_storeManager->getStore(true)->getId();
         /** @var $collection \Magento\Catalog\Model\ResourceModel\Product\Collection */
         $collection = $this->_productCollectionFactory->create();
@@ -376,10 +394,13 @@ class Product extends \Magento\Framework\DataObject
      *
      * @param int $sellerId
      * @param mixed|array $config
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection|null
      */
     public function getRandomProducts($sellerId, $config = [])
     {
+        if (!$this->helperData->isEnabled()) {
+            return null;
+        }
         /** @var $collection \Magento\Catalog\Model\ResourceModel\Product\Collection */
         $collection = $this->_productCollectionFactory->create();
         if (isset($config['categories']) && $config['categories']) {
@@ -435,10 +456,13 @@ class Product extends \Magento\Framework\DataObject
      *
      * @param int $sellerId
      * @param mixed|array $config
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection|null
      */
     public function getTopratedProducts($sellerId, $config = [])
     {
+        if (!$this->helperData->isEnabled()) {
+            return null;
+        }
         $storeId = $this->_storeManager->getStore(true)->getId();
         /** @var $collection \Magento\Catalog\Model\ResourceModel\Product\Collection */
         $collection = $this->_productCollectionFactory->create();
@@ -503,10 +527,13 @@ class Product extends \Magento\Framework\DataObject
      *
      * @param int $sellerId
      * @param mixed|array $config
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection|null
      */
     public function getSpecialProducts($sellerId, $config = [])
     {
+        if (!$this->helperData->isEnabled()) {
+            return null;
+        }
         /** @var $collection \Magento\Catalog\Model\ResourceModel\Product\Collection */
         $collection = $this->_productCollectionFactory->create();
         if (isset($config['categories']) && $config['categories']) {
@@ -565,10 +592,13 @@ class Product extends \Magento\Framework\DataObject
      *
      * @param int $sellerId
      * @param mixed|array
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection|null
      */
     public function getDealsProducts($sellerId, $config = [])
     {
+        if (!$this->helperData->isEnabled()) {
+            return null;
+        }
         $todayStartOfDayDate = $this->_localeDate->date()->setTime(0, 0, 0)->format('Y-m-d H:i:s');
         $todayEndOfDayDate = $this->_localeDate->date()->setTime(23, 59, 59)->format('Y-m-d H:i:s');
 
@@ -653,10 +683,13 @@ class Product extends \Magento\Framework\DataObject
      *
      * @param int $sellerId
      * @param mixed|array $config
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection|null
      */
     public function getMostViewedProducts($sellerId, $config = [])
     {
+        if (!$this->helperData->isEnabled()) {
+            return null;
+        }
         /** @var $collection \Magento\Reports\Model\ResourceModel\Product\CollectionFactory */
         $collection = $this->_reportCollection->create()->addAttributeToSelect('*')->addViewsCount();
         if (isset($config['categories']) && $config['categories']) {
@@ -710,10 +743,13 @@ class Product extends \Magento\Framework\DataObject
      *
      * @param int $sellerId
      * @param mixed|array $config
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection|Object|\Magento\Framework\Data\Collection|null
      */
     public function getFeaturedProducts($sellerId, $config = [])
     {
+        if (!$this->helperData->isEnabled()) {
+            return null;
+        }
         /** @var $collection \Magento\Catalog\Model\ResourceModel\Product\Collection */
         $collection = $this->_productCollectionFactory->create();
         if (isset($config['categories']) && $config['categories']) {
@@ -809,7 +845,7 @@ class Product extends \Magento\Framework\DataObject
             break;
         }
 
-        if (!$this->stockConfiguration->isShowOutOfStock()) {
+        if ($collection && !$this->stockConfiguration->isShowOutOfStock()) {
             $this->stockFilter->addInStockFilterToCollection($collection);
         }
         return $collection;

@@ -20,6 +20,116 @@ php bin/magento setup:upgrade
 
 ```
 
+## API docs
+
+Response Data Success: 
+```
+{
+    "items": [
+        {
+            "id": 0,
+            "sku": "string",
+            "name": "string",
+            "attribute_set_id": 0,
+            "price": 0,
+            "status": 0,
+            "visibility": 0
+            ...
+        }
+    ],
+    "search_criteria": {
+        "filter_groups": [
+        {
+            "filters": [
+            {
+                "field": "string",
+                "value": "string",
+                "condition_type": "string"
+            }
+            ]
+        }
+        ],
+        "sort_orders": [
+        {
+            "field": "string",
+            "direction": "string"
+        }
+        ],
+        "page_size": 0,
+        "current_page": 0
+    },
+    "total_count": 0
+}
+```
+
+Error data response:
+```
+{
+  "message": "string",
+  "errors": [
+    {
+      "message": "string",
+      "parameters": [
+        {
+          "resources": "string",
+          "fieldName": "string",
+          "fieldValue": "string"
+        }
+      ]
+    }
+  ],
+  "code": 0,
+  "parameters": [
+    {
+      "resources": "string",
+      "fieldName": "string",
+      "fieldValue": "string"
+    }
+  ],
+  "trace": "string"
+}
+```
+
+### API Endpoints
+
+{sellerUrl} - is public seller url key. Example: seller-a
+
+1. New Arrival Products
+
+``[Your Domain]/V1/seller-productlist/{sellerUrl}/newarrival``
+
+2. Latest Products
+
+``[Your Domain]/V1/seller-productlist/{sellerUrl}/latest``
+
+3. Best Seller Products
+
+``[Your Domain]/V1/seller-productlist/{sellerUrl}/bestseller``
+
+4. Random Products
+
+``[Your Domain]/V1/seller-productlist/{sellerUrl}/random``
+
+5. Top Rated Products
+
+``[Your Domain]/V1/seller-productlist/{sellerUrl}/toprated``
+
+6. Specials Products
+
+``[Your Domain]/V1/seller-productlist/{sellerUrl}/specials``
+
+7. Most Viewed Products
+
+``[Your Domain]/V1/seller-productlist/{sellerUrl}/mostviewed``
+
+8. Featured Products
+
+``[Your Domain]/V1/seller-productlist/{sellerUrl}/featured``
+
+9. Deals Products
+
+``[Your Domain]/V1/seller-productlist/{sellerUrl}/deals``
+
 ## Donation
 
 If this project help you reduce time to develop, you can give me a cup of coffee :) 

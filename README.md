@@ -118,6 +118,11 @@ Error data response:
 
 ``[Your Domain]/V1/seller-productlist/{sellerUrl}/specials``
 
+Note: Require use current store code for endpoint.
+Example: ``http://[your_domain]/rest/default/V1/seller-productlist/{sellerUrl}/specials``
+
+default - is default store view code
+
 7. Most Viewed Products
 
 ``[Your Domain]/V1/seller-productlist/{sellerUrl}/mostviewed``
@@ -129,6 +134,11 @@ Error data response:
 9. Deals Products
 
 ``[Your Domain]/V1/seller-productlist/{sellerUrl}/deals``
+
+Note: Require use current store code for endpoint.
+Example: ``http://[your_domain]/rest/default/V1/seller-productlist/{sellerUrl}/deals``
+default - is default store view code
+
 
 ## Donation
 

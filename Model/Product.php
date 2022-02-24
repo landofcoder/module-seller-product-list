@@ -23,6 +23,8 @@ declare(strict_types = 1);
 
 namespace Lofmp\Productlist\Model;
 
+use Lof\MarketPlace\Model\ResourceMode\Seller\CollectionFactory as SellerCollectionFactory;
+
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.TooManyFields)
@@ -87,6 +89,16 @@ class Product extends \Magento\Framework\DataObject
     protected $stockFilter;
 
     /**
+     * @var SellerCollectionFactory
+     */
+    protected $sellerCollectionFactory;
+
+    /**
+     * @var int[]
+     */
+    protected $sellerIds = [];
+
+    /**
      * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
      * @param \Magento\Reports\Model\ResourceModel\Product\CollectionFactory $reportCollection
      * @param \Magento\Catalog\Model\Product\Visibility                      $catalogProductVisibility
@@ -98,6 +110,7 @@ class Product extends \Magento\Framework\DataObject
      * @param \Magento\Catalog\Model\ProductFactory                          $productFactory
      * @param \Magento\CatalogInventory\Api\StockConfigurationInterface      $stockConfiguration
      * @param \Magento\CatalogInventory\Helper\Stock                         $stockFilter
+     * @param SellerCollectionFactory $sellerCollectionFactory
      * @param array                                                          $data
      */
     public function __construct(
@@ -112,6 +125,7 @@ class Product extends \Magento\Framework\DataObject
         \Magento\Catalog\Model\ProductFactory $productFactory,
         \Magento\CatalogInventory\Api\StockConfigurationInterface $stockConfiguration,
         \Magento\CatalogInventory\Helper\Stock $stockFilter,
+        SellerCollectionFactory $sellerCollectionFactory,
         array $data = []
         ) {
         $this->_localeDate               = $localeDate;
@@ -125,6 +139,7 @@ class Product extends \Magento\Framework\DataObject
         $this->productFactory            = $productFactory;
         $this->stockConfiguration        = $stockConfiguration;
         $this->stockFilter               = $stockFilter;
+        $this->sellerCollectionFactory = $sellerCollectionFactory;
         parent::__construct($data);
     }
 
@@ -725,6 +740,23 @@ class Product extends \Magento\Framework\DataObject
             $this->stockFilter->addInStockFilterToCollection($collection);
         }
         return $collection;
+    }
+
+    /**
+     * Get seller id by url
+     *
+     * @param string $url
+     * @return int
+     */
+    private function getSellerIdByUrl(string $url): int
+    {
+        if (!isset($this->sellerIds[$url])) {
+            $seller = $this->sellerCollectionFactory->create()
+                        ->addFieldToFilter('url_key', ['eq' => $url])
+                        ->getFirstItem();
+            $this->sellerIds[$url] = ($seller && $seller->getId()) ? $seller->getId() : 0;
+        }
+        return $this->sellerIds[$url];
     }
 
 }

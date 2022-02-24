@@ -21,55 +21,55 @@
  */
 -->
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../app/code/Magento/Webapi/etc/webapi.xsd">
-    <route url="/V1/seller-productlist/:sellerId/newarrival" method="GET">
+    <route url="/V1/seller-productlist/:sellerUrl/newarrival" method="GET">
         <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getNewarrivalProducts"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/seller-productlist/:sellerId/latest" method="GET">
+    <route url="/V1/seller-productlist/:sellerUrl/latest" method="GET">
         <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getLatestProducts"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/seller-productlist/:sellerId/bestseller" method="GET">
+    <route url="/V1/seller-productlist/:sellerUrl/bestseller" method="GET">
         <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getBestsellerProducts"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/seller-productlist/:sellerId/random" method="GET">
+    <route url="/V1/seller-productlist/:sellerUrl/random" method="GET">
         <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getRandomProducts"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/seller-productlist/:sellerId/toprated" method="GET">
+    <route url="/V1/seller-productlist/:sellerUrl/toprated" method="GET">
         <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getTopratedProducts"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/seller-productlist/:sellerId/specials" method="GET">
+    <route url="/V1/seller-productlist/:sellerUrl/specials" method="GET">
         <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getSpecialProducts"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/seller-productlist/:sellerId/mostviewed" method="GET">
+    <route url="/V1/seller-productlist/:sellerUrl/mostviewed" method="GET">
         <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getMostViewedProducts"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/seller-productlist/:sellerId/featured" method="GET">
+    <route url="/V1/seller-productlist/:sellerUrl/featured" method="GET">
         <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getFeaturedProducts"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/seller-productlist/:sellerId/deals" method="GET">
+    <route url="/V1/seller-productlist/:sellerUrl/deals" method="GET">
         <service class="Lofmp\Productlist\Api\ProductRepositoryInterface" method="getDealsProducts"/>
         <resources>
             <resource ref="anonymous"/>

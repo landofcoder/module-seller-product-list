@@ -107,7 +107,7 @@ class InstallData implements InstallDataInterface
      */
     public function isProductAttributeExists($field)
     {
-        $attr = $this->_eavConfig->getAttribute(Product::ENTITY, $field);
+        $attr = $this->eavConfig->getAttribute(Product::ENTITY, $field);
 
         return ($attr && $attr->getId());
     }

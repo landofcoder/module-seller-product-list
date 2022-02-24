@@ -92,6 +92,7 @@ class ProductRepository implements ProductRepositoryInterface
      */
     protected $instancesById = [];
 
+
     /**
      * @param ProductlistProductFactory $productFactory
      * @param ProductInterfaceFactory $dataProductFactory
@@ -135,90 +136,90 @@ class ProductRepository implements ProductRepositoryInterface
      * {@inheritdoc}
      */
     public function getNewarrivalProducts(
-        int $sellerId,
+        string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("new_arrival", $sellerId, $criteria);
+        return $this->getProductsBySource("new_arrival", $sellerUrl, $criteria);
     }
 
     /**
      * {@inheritdoc}
      */
     public function getLatestProducts(
-        int $sellerId,
+        string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("latest", $sellerId, $criteria);
+        return $this->getProductsBySource("latest", $sellerUrl, $criteria);
     }
 
     /**
      * {@inheritdoc}
      */
     public function getSpecialProducts(
-        int $sellerId,
+        string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("special", $sellerId, $criteria);
+        return $this->getProductsBySource("special", $sellerUrl, $criteria);
     }
 
     /**
      * {@inheritdoc}
      */
     public function getMostViewedProducts(
-        int $sellerId,
+        string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("most_popular", $sellerId, $criteria);
+        return $this->getProductsBySource("most_popular", $sellerUrl, $criteria);
     }
 
     /**
      * {@inheritdoc}
      */
     public function getBestsellerProducts(
-        int $sellerId,
+        string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("best_seller", $sellerId, $criteria);
+        return $this->getProductsBySource("best_seller", $sellerUrl, $criteria);
     }
 
     /**
      * {@inheritdoc}
      */
     public function getTopratedProducts(
-        int $sellerId,
+        string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("top_rated", $sellerId, $criteria);
+        return $this->getProductsBySource("top_rated", $sellerUrl, $criteria);
     }
 
     /**
      * {@inheritdoc}
      */
     public function getRandomProducts(
-        int $sellerId,
+        string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("random", $sellerId, $criteria);
+        return $this->getProductsBySource("random", $sellerUrl, $criteria);
     }
 
     /**
      * {@inheritdoc}
      */
     public function getFeaturedProducts(
-        int $sellerId,
+        string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("featured", $sellerId, $criteria);
+        return $this->getProductsBySource("featured", $sellerUrl, $criteria);
     }
 
     /**
      * {@inheritdoc}
      */
     public function getDealsProducts(
-        int $sellerId,
+        string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("deals", $sellerId, $criteria);
+        return $this->getProductsBySource("deals", $sellerUrl, $criteria);
     }
 
      /**
@@ -226,10 +227,15 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getProductsBySource(
         $sourceKey = "latest",
-        $sellerId,
+        string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
     ) {
         $product = $this->productFactory->create();
+        $sellerId = $product->getSellerIdByUrl($sellerUrl);
+        if (!$sellerId) {
+            throw new NoSuchEntityException(__('Not found any seller for url "%1".', $sellerUrl));
+        }
+
         $config = [];
         foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
             $filters = $filterGroup->getFilters();

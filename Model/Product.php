@@ -23,7 +23,8 @@ declare(strict_types = 1);
 
 namespace Lofmp\Productlist\Model;
 
-use Lof\MarketPlace\Model\ResourceMode\Seller\CollectionFactory as SellerCollectionFactory;
+use Lof\MarketPlace\Model\SellerProduct;
+use Lof\MarketPlace\Model\ResourceModel\Seller\CollectionFactory as SellerCollectionFactory;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -94,7 +95,7 @@ class Product extends \Magento\Framework\DataObject
     protected $sellerCollectionFactory;
 
     /**
-     * @var int[]
+     * @var mixed|array
      */
     protected $sellerIds = [];
 
@@ -192,6 +193,14 @@ class Product extends \Magento\Framework\DataObject
                 ->addAttributeToSelect('*')
                 ->addStoreFilter()
                 ->addAttributeToFilter('seller_id', $sellerId)
+                ->addAttributeToFilter('approval',
+                    ['in' =>
+                        [
+                            SellerProduct::STATUS_NOT_SUBMITED,
+                            SellerProduct::STATUS_APPROVED
+                        ]
+                    ]
+                )
                 ->addAttributeToFilter(
                     'news_from_date',
                     [
@@ -273,6 +282,14 @@ class Product extends \Magento\Framework\DataObject
         $collection->setVisibility($this->_catalogProductVisibility->getVisibleInCatalogIds())
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter("seller_id", $sellerId)
+                ->addAttributeToFilter('approval',
+                    ['in' =>
+                        [
+                            SellerProduct::STATUS_NOT_SUBMITED,
+                            SellerProduct::STATUS_APPROVED
+                        ]
+                    ]
+                )
                 ->addStoreFilter();
 
         if (isset($config['pagesize']) && $config['pagesize']) {
@@ -325,6 +342,14 @@ class Product extends \Magento\Framework\DataObject
         $collection->setVisibility($this->_catalogProductVisibility->getVisibleInCatalogIds())
             ->addAttributeToSelect('*')
             ->addAttributeToFilter("seller_id", $sellerId)
+            ->addAttributeToFilter('approval',
+                ['in' =>
+                    [
+                        SellerProduct::STATUS_NOT_SUBMITED,
+                        SellerProduct::STATUS_APPROVED
+                    ]
+                ]
+            )
             ->addStoreFilter()
             ->joinField(
                 'qty_ordered',
@@ -384,6 +409,14 @@ class Product extends \Magento\Framework\DataObject
         $collection->setVisibility($this->_catalogProductVisibility->getVisibleInCatalogIds())
             ->addAttributeToSelect('*')
             ->addAttributeToFilter("seller_id", $sellerId)
+            ->addAttributeToFilter('approval',
+                ['in' =>
+                    [
+                        SellerProduct::STATUS_NOT_SUBMITED,
+                        SellerProduct::STATUS_APPROVED
+                    ]
+                ]
+            )
             ->addStoreFilter();
 
         if (isset($config['pagesize']) && $config['pagesize']) {
@@ -436,6 +469,14 @@ class Product extends \Magento\Framework\DataObject
         $collection->setVisibility($this->_catalogProductVisibility->getVisibleInCatalogIds())
             ->addAttributeToSelect('*')
             ->addAttributeToFilter("seller_id", $sellerId)
+            ->addAttributeToFilter('approval',
+                ['in' =>
+                    [
+                        SellerProduct::STATUS_NOT_SUBMITED,
+                        SellerProduct::STATUS_APPROVED
+                    ]
+                ]
+            )
             ->addStoreFilter()
             ->joinField(
                 'ves_review',
@@ -495,6 +536,14 @@ class Product extends \Magento\Framework\DataObject
         $collection->setVisibility($this->_catalogProductVisibility->getVisibleInCatalogIds())
             ->addAttributeToSelect('*')
             ->addAttributeToFilter("seller_id", $sellerId)
+            ->addAttributeToFilter('approval',
+                ['in' =>
+                    [
+                        SellerProduct::STATUS_NOT_SUBMITED,
+                        SellerProduct::STATUS_APPROVED
+                    ]
+                ]
+            )
             ->addStoreFilter()
             ->addMinimalPrice()
             ->addUrlRewrite()
@@ -576,6 +625,14 @@ class Product extends \Magento\Framework\DataObject
             ['attribute' => 'special_to_date', 'is' => new \Zend_Db_Expr('not null')],
         ])
         ->addAttributeToFilter("seller_id", $sellerId)
+        ->addAttributeToFilter('approval',
+            ['in' =>
+                [
+                    SellerProduct::STATUS_NOT_SUBMITED,
+                    SellerProduct::STATUS_APPROVED
+                ]
+            ]
+        )
         ->addMinimalPrice()
         ->addUrlRewrite()
         ->addTaxPercents()
@@ -629,6 +686,14 @@ class Product extends \Magento\Framework\DataObject
         $collection->setVisibility($this->_catalogProductVisibility->getVisibleInCatalogIds())
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter("seller_id", $sellerId)
+                ->addAttributeToFilter('approval',
+                    ['in' =>
+                        [
+                            SellerProduct::STATUS_NOT_SUBMITED,
+                            SellerProduct::STATUS_APPROVED
+                        ]
+                    ]
+                )
                 ->addStoreFilter();
         if (isset($config['pagesize']) && $config['pagesize']) {
             $collection->setPageSize((int)$config['pagesize']);
@@ -683,6 +748,14 @@ class Product extends \Magento\Framework\DataObject
                     )
                 )
                 ->addAttributeToFilter("seller_id", $sellerId)
+                ->addAttributeToFilter('approval',
+                    ['in' =>
+                        [
+                            SellerProduct::STATUS_NOT_SUBMITED,
+                            SellerProduct::STATUS_APPROVED
+                        ]
+                    ]
+                )
                 ->addStoreFilter();
 
         if (isset($config['pagesize']) && $config['pagesize']) {
@@ -748,15 +821,19 @@ class Product extends \Magento\Framework\DataObject
      * @param string $url
      * @return int
      */
-    private function getSellerIdByUrl(string $url): int
+    public function getSellerIdByUrl(string $url): int
     {
+        if (!$url) {
+            return 0;
+        }
         if (!isset($this->sellerIds[$url])) {
             $seller = $this->sellerCollectionFactory->create()
                         ->addFieldToFilter('url_key', ['eq' => $url])
                         ->getFirstItem();
+
             $this->sellerIds[$url] = ($seller && $seller->getId()) ? $seller->getId() : 0;
         }
-        return $this->sellerIds[$url];
+        return (int)$this->sellerIds[$url];
     }
 
 }

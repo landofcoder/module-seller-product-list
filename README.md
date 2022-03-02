@@ -5,7 +5,7 @@ Support filter products list of seller
 - Module supports you to create a wanted list of products based on attribute, types, conditions of items.
 To create a rule list is very simple. Also, this module is easy to configure too.
 - The module just support REST API features.
-- Support GraphQl
+- Support GraphQl [Seller Product List Graph Ql Module](https://github.com/landofcoder/module-seller-product-list-graph-ql)
 
 ## Install Extension
 

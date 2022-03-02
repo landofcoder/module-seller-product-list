@@ -24,6 +24,7 @@ declare(strict_types = 1);
 namespace Lofmp\Productlist\Model;
 
 use Lof\MarketPlace\Model\SellerProduct;
+use Lof\MarketPlace\Model\Seller;
 use Lof\MarketPlace\Model\ResourceModel\Seller\CollectionFactory as SellerCollectionFactory;
 use Lofmp\Productlist\Helper\Data;
 
@@ -865,6 +866,7 @@ class Product extends \Magento\Framework\DataObject
         if (!isset($this->sellerIds[$url])) {
             $seller = $this->sellerCollectionFactory->create()
                         ->addFieldToFilter('url_key', ['eq' => $url])
+                        ->addFieldToFilter("status", Seller::STATUS_ENABLED)
                         ->getFirstItem();
 
             $this->sellerIds[$url] = ($seller && $seller->getId()) ? $seller->getId() : 0;

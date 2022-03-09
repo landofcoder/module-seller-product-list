@@ -139,7 +139,7 @@ class ProductRepository implements ProductRepositoryInterface
         string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("new_arrival", $sellerUrl, $criteria);
+        return $this->getProductsBySource($sellerUrl, $criteria, "new_arrival");
     }
 
     /**
@@ -149,7 +149,7 @@ class ProductRepository implements ProductRepositoryInterface
         string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("latest", $sellerUrl, $criteria);
+        return $this->getProductsBySource($sellerUrl, $criteria, "latest");
     }
 
     /**
@@ -159,7 +159,7 @@ class ProductRepository implements ProductRepositoryInterface
         string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("special", $sellerUrl, $criteria);
+        return $this->getProductsBySource($sellerUrl, $criteria, "special");
     }
 
     /**
@@ -169,7 +169,7 @@ class ProductRepository implements ProductRepositoryInterface
         string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("most_popular", $sellerUrl, $criteria);
+        return $this->getProductsBySource($sellerUrl, $criteria, "most_popular");
     }
 
     /**
@@ -179,7 +179,7 @@ class ProductRepository implements ProductRepositoryInterface
         string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("best_seller", $sellerUrl, $criteria);
+        return $this->getProductsBySource($sellerUrl, $criteria, "best_seller");
     }
 
     /**
@@ -189,7 +189,7 @@ class ProductRepository implements ProductRepositoryInterface
         string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("top_rated", $sellerUrl, $criteria);
+        return $this->getProductsBySource($sellerUrl, $criteria, "top_rated");
     }
 
     /**
@@ -199,7 +199,7 @@ class ProductRepository implements ProductRepositoryInterface
         string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("random", $sellerUrl, $criteria);
+        return $this->getProductsBySource($sellerUrl, $criteria, "random");
     }
 
     /**
@@ -209,7 +209,7 @@ class ProductRepository implements ProductRepositoryInterface
         string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("featured", $sellerUrl, $criteria);
+        return $this->getProductsBySource($sellerUrl, $criteria, "featured");
     }
 
     /**
@@ -219,16 +219,16 @@ class ProductRepository implements ProductRepositoryInterface
         string $sellerUrl,
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
-        return $this->getProductsBySource("deals", $sellerUrl, $criteria);
+        return $this->getProductsBySource($sellerUrl, $criteria, "deals");
     }
 
      /**
      * {@inheritdoc}
      */
     public function getProductsBySource(
-        $sourceKey = "latest",
         string $sellerUrl,
-        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria,
+        $sourceKey = "latest"
     ) {
         $product = $this->productFactory->create();
         $sellerId = $product->getSellerIdByUrl($sellerUrl);

@@ -119,16 +119,16 @@ interface ProductRepositoryInterface
 
     /**
      * Retrieve featured Products matching the specified criteria.
-     * @param string $sourceKey (support there keys: latest, new_arrival, special, most_popular, best_seller, top_rated, random, featured, deals)
      * @param string $sellerUrl
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @param string $sourceKey (support there keys: latest, new_arrival, special, most_popular, best_seller, top_rated, random, featured, deals)
      * @return \Magento\Catalog\Api\Data\ProductSearchResultsInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getProductsBySource(
-        $sourceKey = "latest",
         string $sellerUrl,
-        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria,
+        $sourceKey = "latest"
     );
 }
 

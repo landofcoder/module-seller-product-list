@@ -819,28 +819,28 @@ class Product extends \Magento\Framework\DataObject
                 $collection = $this->getLatestProducts($sellerId, $config);
             break;
             case 'new_arrival':
-                $collection = $this->getNewarrivalProducts($config);
+                $collection = $this->getNewarrivalProducts($sellerId, $config);
             break;
             case 'special':
-                $collection = $this->getSpecialProducts($config);
+                $collection = $this->getSpecialProducts($sellerId, $config);
             break;
             case 'most_popular':
-                $collection = $this->getMostViewedProducts($config);
+                $collection = $this->getMostViewedProducts($sellerId, $config);
             break;
             case 'best_seller':
-                $collection = $this->getBestsellerProducts($config);
+                $collection = $this->getBestsellerProducts($sellerId, $config);
             break;
             case 'top_rated':
-                $collection = $this->getTopratedProducts($config);
+                $collection = $this->getTopratedProducts($sellerId, $config);
             break;
             case 'random':
-                $collection = $this->getRandomProducts($config);
+                $collection = $this->getRandomProducts($sellerId, $config);
             break;
             case 'featured':
-                $collection = $this->getFeaturedProducts($config);
+                $collection = $this->getFeaturedProducts($sellerId, $config);
             break;
             case 'deals':
-                $collection = $this->getDealsProducts($config);
+                $collection = $this->getDealsProducts($sellerId, $config);
             break;
             default:
             break;
